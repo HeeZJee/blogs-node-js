@@ -1,14 +1,63 @@
 const http = require("http");
-
-const host = "localhost";
-const port = 3000;
+const fs = require("fs");
 
 const server = http.createServer((req, res) => {
-  console.log(req);
-  console.log(res);
-  console.log("request made");
+  // console.log(req);
+  console.log(req.url, res.statusCode);
+
+  // set header content type
+  res.setHeader("Content-Type", "text/html");
+
+  // res.write('<p>hello, ninjas</p>');
+  // res.write('<p>hello again, ninjas</p>');
+  // res.end();
+
+  // send html file
+  // fs.readFile('./views/index.html', (err, data) => {
+  //   if (err) {
+  //     console.log(err);
+  //     res.end();
+  //   }
+  //   //res.write(data);
+  //   res.end(data);
+  // });
+
+  // routing
+  let path = "./html/";
+  switch (req.url) {
+    case "/":
+    case "/index.html":
+      path += "index.html";
+      res.statusCode = 200;
+      break;
+    case "/about":
+    case "/about.html":
+      path += "about.html";
+      res.statusCode = 200;
+      break;
+    case "/about-me":
+    case "/about-me.html":
+      res.statusCode = 301;
+      res.setHeader("Location", "/about");
+      res.end();
+      break;
+    default:
+      path += "404.html";
+      res.statusCode = 404;
+  }
+
+  // send html
+  fs.readFile(path, (err, data) => {
+    if (err) {
+      console.log(err);
+      res.end();
+    }
+    //res.write(data);
+    res.end(data);
+  });
 });
 
-server.listen(port, host, () => {
-  console.log(`listening http://${host}:${port}`);
+// localhost is the default value for 2nd argument
+server.listen(3000, "localhost", () => {
+  console.log("listening for requests on port 3000");
 });
