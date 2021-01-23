@@ -10,15 +10,33 @@ const port = 3000;
 app.listen(port);
 
 app.get("/", (req, res) => {
-  res.render("index");
+  const blogs = [
+    {
+      title: "From Earth to Space and Beyond",
+      snippet:
+        " Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
+    },
+    {
+      title: "From Earth to Space and Beyond",
+      snippet:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
+    },
+    {
+      title: "From Earth to Space and Beyond",
+      snippet:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
+    },
+  ];
+
+  res.render("index", { title: "Home", blogs });
 });
 
 app.get("/about", (req, res) => {
-  res.render("about");
+  res.render("about", { title: "About" });
 });
 
 app.get("/blogs/create", (req, res) => {
-  res.render("create");
+  res.render("create", { title: "Create a new blog" });
 });
 
 app.get("/about-me", (req, res) => {
@@ -26,5 +44,5 @@ app.get("/about-me", (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).render("404");
+  res.status(404).render("404", { title: "Error 404" });
 });

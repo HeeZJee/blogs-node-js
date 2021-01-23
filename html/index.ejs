@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HeeZJee</title>
+    <title>HeeZJee | <%= title %></title>
   </head>
   <body>
     <nav>
@@ -21,6 +21,13 @@
 
     <div class="blogs content">
       <h2>All Blogs</h2>
+
+      <%if (blogs.length) { %> <%blogs.map( blog => {%>
+      <h3 class="title"><%= blog.title %></h3>
+      <p class="title"><%= blog.snippet %></p>
+      <%})%> <%} else { %>
+      <p>There are no blog to display.</p>
+      <%}%>
     </div>
   </body>
 </html>
