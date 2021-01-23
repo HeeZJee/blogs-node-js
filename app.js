@@ -1,14 +1,16 @@
 const express = require("express");
 const morgan = require("morgan");
-
+const { PORT, USER, PASS } = require("./config");
 const app = express();
+
+const dbURI = `mongodb+srv://${USER}:${PASS}@blog-cluster.oyikf.mongodb.net/<dbname>?retryWrites=true&w=majority`;
 
 // register view engine
 app.set("view engine", "ejs");
 app.set("views", "html");
 
-const port = 3000;
-app.listen(port);
+// const port = 3000;
+app.listen(PORT);
 
 app.use(morgan("dev"));
 
