@@ -12,6 +12,8 @@ app.listen(port);
 
 app.use(morgan("dev"));
 
+app.use(express.static("public"));
+
 app.get("/", (req, res) => {
   const blogs = [
     {
