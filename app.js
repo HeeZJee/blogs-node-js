@@ -1,8 +1,12 @@
 const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const Blog = require("./models/blogs");
+
+// console.log(Blog);
 
 const { PORT, USER, PASS, DB_NAME } = require("./config");
+const { result } = require("lodash");
 const app = express();
 const dbURI = `mongodb+srv://${USER}:${PASS}@blog-cluster.oyikf.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
 
