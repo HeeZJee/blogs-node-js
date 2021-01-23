@@ -1,23 +1,7 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HeeZJee | <%= title %></title>
-  </head>
+  <%- include('./partials/head.ejs') %>
   <body>
-    <nav>
-      <div class="site-title">
-        <a href="/">
-          <h1>HeeZJee</h1>
-          <p>Keep Moving Forward</p>
-        </a>
-      </div>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/blogs/create">New Blog</a></li>
-      </ul>
-    </nav>
+    <%- include('./partials/nav.ejs') %>
 
     <div class="blogs content">
       <h2>All Blogs</h2>
@@ -37,5 +21,6 @@
         Delectus nobis distinctio nam eligendi quas ipsum totam sapiente unde!
       </p>
     </div>
+    <%- include('./partials/footer.ejs') %>
   </body>
 </html>
