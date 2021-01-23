@@ -27,37 +27,45 @@ app.use(morgan("dev"));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-  const blogs = [
-    {
-      title: "From Earth to Space and Beyond",
-      snippet:
-        " Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
-    },
-    {
-      title: "From Earth to Space and Beyond",
-      snippet:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
-    },
-    {
-      title: "From Earth to Space and Beyond",
-      snippet:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
-    },
-  ];
+  // const blogs = [
+  //   {
+  //     title: "From Earth to Space and Beyond",
+  //     snippet:
+  //       " Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
+  //   },
+  //   {
+  //     title: "From Earth to Space and Beyond",
+  //     snippet:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
+  //   },
+  //   {
+  //     title: "From Earth to Space and Beyond",
+  //     snippet:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
+  //   },
+  // ];
+  res.redirect("/blogs");
 
-  res.render("index", { title: "Home", blogs });
+  // res.render("index", { title: "Home", blogs });
+});
+
+app.get("/about-me", (req, res) => {
+  res.redirect("/about");
 });
 
 app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
 });
 
-app.get("/blogs/create", (req, res) => {
-  res.render("create", { title: "Create a new blog" });
+app.get("/blogs", (req, res) => {
+  Blog.find()
+    .sort({ createdAt: -1 })
+    .then((result) => res.render("index", { title: "Home", blogs: result }))
+    .catch((err) => console.error(err));
 });
 
-app.get("/about-me", (req, res) => {
-  res.redirect("/about");
+app.get("/blogs/create", (req, res) => {
+  res.render("create", { title: "Create a new blog" });
 });
 
 app.use((req, res) => {
