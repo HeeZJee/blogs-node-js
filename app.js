@@ -2,15 +2,23 @@ const express = require("express");
 
 const app = express();
 
+// register view engine
+app.set("view engine", "ejs");
+app.set("views", "html");
+
 const port = 3000;
 app.listen(port);
 
 app.get("/", (req, res) => {
-  res.sendFile("./html/index.html", { root: __dirname });
+  res.render("index");
 });
 
 app.get("/about", (req, res) => {
-  res.sendFile("./html/about.html", { root: __dirname });
+  res.render("about");
+});
+
+app.get("/blogs/create", (req, res) => {
+  res.render("create");
 });
 
 app.get("/about-me", (req, res) => {
@@ -18,5 +26,5 @@ app.get("/about-me", (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).sendFile("./html/404.html", { root: __dirname });
+  res.status(404).render("404");
 });
