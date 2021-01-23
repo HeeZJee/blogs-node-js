@@ -1,16 +1,22 @@
 const express = require("express");
 const morgan = require("morgan");
-const { PORT, USER, PASS } = require("./config");
-const app = express();
+const mongoose = require("mongoose");
 
-const dbURI = `mongodb+srv://${USER}:${PASS}@blog-cluster.oyikf.mongodb.net/<dbname>?retryWrites=true&w=majority`;
+const { PORT, USER, PASS, DB_NAME } = require("./config");
+const app = express();
+const dbURI = `mongodb+srv://${USER}:${PASS}@blog-cluster.oyikf.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
+
+// connect to mongodb
+mongoose
+  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => app.listen(PORT))
+  .catch((err) => console.error(err));
 
 // register view engine
 app.set("view engine", "ejs");
 app.set("views", "html");
 
 // const port = 3000;
-app.listen(PORT);
 
 app.use(morgan("dev"));
 
