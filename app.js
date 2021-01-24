@@ -13,7 +13,10 @@ const dbURI = `mongodb+srv://${USER}:${PASS}@blog-cluster.oyikf.mongodb.net/${DB
 // connect to mongodb
 mongoose
   .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => app.listen(PORT))
+  .then(() => {
+    app.listen(PORT);
+    console.log(`App running at port: ${PORT}`);
+  })
   .catch((err) => console.error(err));
 
 // register view engine
@@ -23,7 +26,7 @@ app.set("views", "html");
 // const port = 3000;
 
 app.use(morgan("dev"));
-
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
@@ -62,6 +65,24 @@ app.get("/blogs", (req, res) => {
     .sort({ createdAt: -1 })
     .then((result) => res.render("index", { title: "Home", blogs: result }))
     .catch((err) => console.error(err));
+});
+
+app.post("/blogs", (req, res) => {
+  const blogs = new Blog(req.body);
+
+  blogs
+    .save()
+    .then(() => res.redirect("/blogs"))
+    .catch((err) => console.log(err));
+
+  console.log(req.body);
+});
+
+app.get("/blogs/:_id", (req, res) => {
+  const id = req.params._id;
+  Blog.findById(id)
+    .then((blog) => res.render("details", { title: "Detail Page", blog }))
+    .catch((err) => console.log(err));
 });
 
 app.get("/blogs/create", (req, res) => {

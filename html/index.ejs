@@ -7,8 +7,10 @@
       <h2>All Blogs</h2>
 
       <%if (blogs.length) { %> <%blogs.map( blog => {%>
-      <h3 class="title"><%= blog.title %></h3>
-      <p class="title"><%= blog.snippet %></p>
+      <a class="single" href="/blogs/<%= blog._id %>">
+        <h3 class="title"><%= blog.title %></h3>
+        <p class="title"><%= blog.snippet %></p>
+      </a>
       <%})%> <%} else { %>
       <p>There are no blog to display.</p>
       <%}%>
