@@ -85,6 +85,15 @@ app.get("/blogs/:_id", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+app.delete("/blogs/:id", (req, res) => {
+  const id = req.params.id;
+  Blog.findByIdAndDelete(id)
+    .then((result) => {
+      res.json({ redirect: "/blogs" });
+    })
+    .catch((err) => console.error(err));
+});
+
 app.get("/blogs/create", (req, res) => {
   res.render("create", { title: "Create a new blog" });
 });
