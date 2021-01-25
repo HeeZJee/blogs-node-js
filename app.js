@@ -5,7 +5,6 @@ const blogRoutes = require("./routes/blogRoutes");
 // console.log(Blog);
 
 const { PORT, USER, PASS, DB_NAME } = require("./config");
-const { result } = require("lodash");
 const app = express();
 const dbURI = `mongodb+srv://${USER}:${PASS}@blog-cluster.oyikf.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`;
 
@@ -22,35 +21,19 @@ mongoose
 app.set("view engine", "ejs");
 app.set("views", "html");
 
-// const port = 3000;
+//  logger middleware
+app.use(morgan("combined"));
 
-app.use(morgan("dev"));
+// public files
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// home page redirect to blogs
 app.get("/", (req, res) => {
-  // const blogs = [
-  //   {
-  //     title: "From Earth to Space and Beyond",
-  //     snippet:
-  //       " Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
-  //   },
-  //   {
-  //     title: "From Earth to Space and Beyond",
-  //     snippet:
-  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
-  //   },
-  //   {
-  //     title: "From Earth to Space and Beyond",
-  //     snippet:
-  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate enim hic omnis, corrupti natus deserunt totam quae officia quos impedit.",
-  //   },
-  // ];
   res.redirect("/blogs");
-
-  // res.render("index", { title: "Home", blogs });
 });
 
+// about page
 app.get("/about-me", (req, res) => {
   res.redirect("/about");
 });
@@ -59,8 +42,10 @@ app.get("/about", (req, res) => {
   res.render("about", { title: "About" });
 });
 
+// blogs page
 app.use("/blogs", blogRoutes);
 
+// 404 page
 app.use((req, res) => {
   res.status(404).render("404", { title: "Error 404" });
 });
